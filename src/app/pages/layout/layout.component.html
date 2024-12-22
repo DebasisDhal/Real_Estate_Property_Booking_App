@@ -1,0 +1,43 @@
+ <div class="d-flex">
+    <div style="display: inline-block; width: 20%;">
+    <!-- Side Navigation -->
+    <nav class="nav flex-column bg-dark text-white p-3" style="width: 250px; height: 100vh;">
+        <h2 class="text-white">My App</h2>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+           
+            <li>
+              <a routerLink="/dashboard" class="nav-link text-white" routerLinkActive="active">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a routerLink="/property-type" class="nav-link text-white"  routerLinkActive="active">
+                <svg class="bi me-2" width="16" height="16"/>
+                Property Type
+              </a>
+            </li>
+            <li>
+              <a routerLink="login" class="nav-link text-white"  routerLinkActive="active">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+                Products
+              </a>
+            </li>
+            <li>
+              <a routerLink="login" class="nav-link text-white"  routerLinkActive="active">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+                Customers
+              </a>
+            </li>
+          </ul>
+       
+    </nav>
+</div>
+    <!-- Content Area -->
+
+    <div class="container-fluid p-4" style=" display: inline-block; width: 80%;">
+    <router-outlet/>
+       
+    </div>
+</div>

@@ -1,0 +1,32 @@
+
+<div class="parent" [formGroup]="userForm">
+   
+    <div class="login-container">
+        <img src="pngtree-creative-synthesis-city-comic-real-estate-image_8675.jpg"/>
+        <h2>Real Estate Login</h2>
+        <form id="loginForm">
+           
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" formControlName="userName" placeholder="Enter your email" required>
+                <div class="text-danger" *ngIf="userForm.controls['userName'].touched" style="color: red;">
+                    <span *ngIf="userForm.controls['userName'].errors?.['required']">This is required</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" formControlName="password" placeholder="Enter your password" required>
+                <div class="text-danger" *ngIf="userForm.controls['password'].touched" style="color: red;">
+                    <span *ngIf="userForm.controls['password'].errors?.['required']">This is required</span>
+                    <span *ngIf="userForm.controls['password'].errors?.['minlength']">Minmum 3 length</span>
+                </div>
+            </div>
+            <button type="submit" (click)="onSubmit()" class="login-btn">Login</button>
+        </form>
+        <div class="form-footer">
+            <p>Don't have an account? <a href="#">Sign up</a></p>
+            <p><a href="#">Forgot password?</a></p>
+        </div>
+    </div>
+    
+</div>

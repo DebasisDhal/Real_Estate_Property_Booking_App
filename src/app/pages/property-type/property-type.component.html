@@ -1,0 +1,60 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    Properties list
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of gridData; track $index) {
+                            <tr>
+                                <th scope="row">{{$index+1}}</th>
+                                <td>{{item.propertyType}}</td>
+
+                                <td>
+                                    <button class="btn btn-warning">Edit</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    Add Customers
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="form">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Property-Type</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" formControlName="propertyType"
+                                aria-describedby="emailHelp">
+                                <div class="text-danger" *ngIf="form.controls['propertyType'].touched">
+
+                                    <span *ngIf="form.controls['propertyType'].errors?.['required']">This is required</span>
+                                    <span *ngIf="form.controls['propertyType'].errors?.['minlength']">Minimum 5 letter required</span>
+
+                                </div>
+                        </div>
+                        <button class="button btn btn-primary" [disabled]="!form.valid" (click)="onSubmit()">Save</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
