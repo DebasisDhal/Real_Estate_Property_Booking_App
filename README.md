@@ -1,5 +1,10 @@
 # RealEstatePropertyBookingApp
 
+Here I Created Property Management software using Angular 18. Complete the Project from Scratch with API integration.
+Angular 18 New Features added.
+All Advanced concepts are also used.
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
 
 ## Development server
