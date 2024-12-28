@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
 
+Table Toogle option, Edit, Delete, form New and Edit Toogle option there, From validation, Rative and templatae driven, Enviorment, signal, Asyncronise pipe, side nav bar
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

@@ -1,1 +1,186 @@
-<p>site works!</p>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Property Management</h2>
+
+    @if(isFormView()){
+
+
+    <!-- Add/Edit Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h5>Create/Update Property</h5>
+                </div>
+                <div class="col-6 text-end">
+                    <button class="btn btn-success" (click)="toggleView()">Go To List</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <form>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="siteTitle" class="form-label">Site Title</label>
+                        <input type="text" #title="ngModel" required minlength="3"  class="form-control" [(ngModel)]="formObj.siteTitle" name="siteTitle" id="siteTitle" placeholder="Enter Site Title">
+                        @if(title.touched){
+                        <div class="text-danger">
+                            @if( title.errors ?.['required']){
+                                <span>This is requried</span>
+                            }
+                            @else if ( title.errors ?.['minlength']) {
+                                <span>Min 3 char required</span>
+                            }
+                        </div>
+                    }
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" [(ngModel)]="formObj.location" name="location" placeholder="Enter Location">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="propertyTypeId" class="form-label">Select Property Type</label>
+                                <select name="propertTypeId" [(ngModel)]="formObj.propertyTypeId"  class="form-select" >
+                                    <option value="">Select Property Type</option>
+                                    @for(item of propertyType$ | async; track $index){
+                                        <option [value]="item.propertTypeId">{{item.propertyType}}</option>     
+                                     }
+                                </select>      
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" #city="ngModel" required minlength="3" class="form-control" id="city" [(ngModel)]="formObj.city" name="city" placeholder="Enter City">
+                        @if(city.touched){
+                            <div class="text-danger">
+                                @if( city.errors ?.['required']){
+                                    <span>This is requried</span>
+                                }
+                                @else if ( city.errors ?.['minlength']) {
+                                    <span>Min 3 char required</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <label for="pincode" class="form-label">Pincode</label>
+                        <input type="text" #pin="ngModel" required minlength="5" class="form-control" id="pincode" [(ngModel)]="formObj.pincode" name="pincode" placeholder="Enter Pincode">
+                        @if(pin.touched){
+                            <div class="text-danger">
+                                @if( pin.errors ?.['required']){
+                                    <span>This is requried</span>
+                                }
+                                @else if ( pin.errors ?.['minlength']) {
+                                    <span>Min 3 char required</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="state" class="form-label">State</label>
+                        <input type="text" class="form-control" #state="ngModel" required minlength="3" id="state" [(ngModel)]="formObj.state" name="state" placeholder="Enter State">
+                        @if(state.touched){
+                            <div class="text-danger">
+                                @if( state.errors ?.['required']){
+                                    <span>This is requried</span>
+                                }
+                                @else if ( state.errors ?.['minlength']) {
+                                    <span>Min 3 char required</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <label for="totalProperties" class="form-label">Total Properties</label>
+                        <input type="number" class="form-control" id="totalProperties" [(ngModel)]="formObj.totalProperties" name="totalProperties"
+                            placeholder="Enter Total Properties">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="createdDate" class="form-label">Created Date</label>
+                        <input type="datetime-local" class="form-control" name="createdDate" [(ngModel)]="formObj.createdDate" id="createdDate">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastUpdatedDate" class="form-label">Last Updated Date</label>
+                        <input type="datetime-local" class="form-control" name="lastUpdatedDate" [(ngModel)]="formObj.lastUpdatedDate" id="lastUpdatedDate">
+                    </div>
+                </div>
+            
+
+                <button type="submit" *ngIf="formObj.siteId == 0" class="btn btn-primary" (click)="onSubmit()">Save</button>
+                <button type="submit" *ngIf="formObj.siteId !== 0" class="btn btn-warning" (click)="onUpdate()">Update</button>
+            </form>
+        </div>
+    </div>
+
+    }@else {
+    <!-- Property List Table -->
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h5>Property List</h5>
+                </div>
+                <div class="col-6 text-end">
+                    <button class="btn btn-success" (click)="toggleView()">Go To Form</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered" >
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Site Title</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Pincode</th>
+                        <th scope="col">Total Properties</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <ng-container *ngIf="gridData.length == 0">
+                    <tr>
+                        <td>
+                            <p>No record found</p>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="gridData.length !== 0">
+                <tbody *ngFor="let item of gridData let i = index;">
+                    <!-- Sample Property -->
+                    <tr>
+                        <td scope="row">{{i+1}}</td>
+                        <td>{{item.siteTitle}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.city}}</td>
+                        <td>{{item.state}}</td>
+                        <td>{{item.pincode}}</td>
+                        <td>{{item.totalProperties}}</td>
+                        <td>{{item.createdDate}}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" (click)="onEdit(item)">Edit</button>
+                            <button class="btn btn-danger btn-sm" (click)="onDelete(item)">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- More properties can go here -->
+                </tbody>
+                </ng-container>
+            </table>
+        </div>
+    </div>
+
+    }
+</div>

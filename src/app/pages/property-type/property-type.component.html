@@ -22,8 +22,8 @@
                                 <td>{{item.propertyType}}</td>
 
                                 <td>
-                                    <button class="btn btn-warning">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                    <button class="btn btn-warning" (click)="OnEdit(item)">Edit</button>
+                                    <button class="btn btn-danger"  (click)="onDelete(item.propertTypeId)">Delete</button>
                                 </td>
                             </tr>
                         }
@@ -51,7 +51,11 @@
 
                                 </div>
                         </div>
+                        @if(form.controls['propertyTypeId'].value == 0){
                         <button class="button btn btn-primary" [disabled]="!form.valid" (click)="onSubmit()">Save</button>
+                        }@else {
+                        <button class="button btn btn-warning" [disabled]="!form.valid" (click)="onUpdate()">Update</button>
+                        }
                     </form>
                 </div>
 

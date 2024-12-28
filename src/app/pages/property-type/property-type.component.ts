@@ -16,6 +16,7 @@ export class PropertyTypeComponent implements OnInit {
 
   mservice =inject(MasterService)
   gridData:IPropertyType [] =[]
+  
 
   form: FormGroup = new FormGroup({
 
@@ -30,11 +31,15 @@ export class PropertyTypeComponent implements OnInit {
   }
 
 
-  initializeForm(){
+  initializeForm(item?:IPropertyType){
     this.form = new FormGroup({
-      propertyTypeId: new FormControl<number>(0),
-      propertyType: new FormControl<string>('',[Validators.required,Validators.minLength(3)])
+      propertyTypeId: new FormControl<number>(item ? item.propertTypeId:0),
+      propertyType: new FormControl<string>(item ? item.propertyType:'',[Validators.required,Validators.minLength(3)])
     })
+  }
+
+  OnEdit(item:IPropertyType){
+   this.initializeForm(item);
   }
   
 
@@ -51,6 +56,34 @@ export class PropertyTypeComponent implements OnInit {
       }
     })
 
+  }
+  onUpdate(){
+    this.mservice.updatePropertyType(this.form.value).subscribe((res:IAPIResponseModel)=>{
+      
+      console.log(res.data);
+      
+      if(res.result){
+        alert("ReCord Updated");
+        this.getGridData();
+      }else{
+        alert(res.message)
+      }
+    })
+
+  }
+
+  onDelete(id:number){
+    const isDel = confirm("Are you want to Delete");
+    if(isDel){
+      this.mservice.deletePropertyType(id).subscribe((res:IAPIResponseModel)=>{
+        if(res.result){
+          alert("Record is Deleted");
+        }else{
+          alert("res.message")
+        }
+      })
+    }
+    
   }
 
   getGridData(){

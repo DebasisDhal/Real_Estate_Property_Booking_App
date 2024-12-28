@@ -4,6 +4,7 @@ import { LayoutComponent } from './pages/layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PropertyComponent } from './pages/property/property.component';
 import { PropertyTypeComponent } from './pages/property-type/property-type.component';
+import { SiteComponent } from './pages/site/site.component';
 
 export const routes: Routes = [
     {
@@ -26,6 +27,10 @@ export const routes: Routes = [
             {
                 path:'property-type',
                 component:PropertyTypeComponent
+            },
+            {
+                path:'site-map',
+                component:SiteComponent
             }
         ]
     }
