@@ -42,4 +42,21 @@ export class MasterService {
     return this.http.delete<IAPIResponseModel>(environment.API_URL+'DeleteSitesById?id='+id)
   }
 
+ saveProperty(obj:site):Observable<IAPIResponseModel>{
+  return this.http.post<IAPIResponseModel>(environment.API_URL+"AddPropertyMasters",obj);
+}
+
+GetAllPropertyMaster():Observable<IAPIResponseModel>{
+  return this.http.get<IAPIResponseModel>(environment.API_URL+"GetAllPropertyMasters")
+}
+getAllPropertyBySiteId(id:number):Observable<IAPIResponseModel>{
+  return this.http.get<IAPIResponseModel>(environment.API_URL+'GetAllPropertyBySiteId?siteid='+id)
+}
+
+onSaveBooking(obj:site):Observable<IAPIResponseModel>{
+  return this.http.post<IAPIResponseModel>(environment.API_URL+'AddPropertyBooking',obj)
+}
+getAllPropertyBookingBySiteId(id:number):Observable<IAPIResponseModel>{
+  return this.http.get<IAPIResponseModel>(environment.API_URL+'GetAllPropertyBookingBySiteId?siteid='+id)
+}
 }

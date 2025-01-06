@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { IAPIResponseModel, IPropertyType, site } from '../../model/master';
-import { FormsModule } from '@angular/forms';
+import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { IAPIResponseModel, IProperty, IPropertyType, site } from '../../model/master';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { map, Observable } from 'rxjs';
 import { MasterService } from '../../service/master.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
@@ -8,24 +8,34 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 @Component({
   selector: 'app-site',
   standalone: true,
-  imports: [FormsModule,AsyncPipe,CommonModule],
+  imports: [FormsModule,AsyncPipe,CommonModule,ReactiveFormsModule],
   templateUrl: './site.component.html',
   styleUrl: './site.component.css'
 })
 export class SiteComponent implements OnInit {
+
   mService = inject(MasterService);
   formObj = new site();
   isFormView = signal<boolean>(false);
   propertyType$: Observable<IPropertyType[]> = new Observable<IPropertyType[]> //Asyncronise pipe use not requird to store data a variable.
+  currentSiteId:any;
+  propertyList: IProperty[] = [];
+
+  @ViewChild('propertyModal') modal: ElementRef | undefined; //It is useing for open modal
 
   gridData: site[] = [];
 
+  propertyForm:FormGroup = new FormGroup({});
+
+
   constructor(){
+    this.initializeForm()
     this.propertyType$ = this.mService.getAllPropertyType().pipe(
       map((item:IAPIResponseModel)=>{
         return item.data
       })
     );
+
   }
 ngOnInit(): void {
   this.getSite();
@@ -88,5 +98,48 @@ ngOnInit(): void {
   }
 
   }
+
+  initializeForm(){
+    this.propertyForm = new FormGroup({
+      propertyId:new FormControl(0),
+      propertyNo: new FormControl(''),
+      facing: new FormControl(''),
+      totalArea: new FormControl(''),
+      rate: new FormControl(''),
+      siteId: new FormControl(this.currentSiteId)
+    })
+  }
+
+  onSave(){
+    this.mService.saveProperty(this.propertyForm.value).subscribe((res:IAPIResponseModel)=>{
+      if(res.result){
+        alert("Record is Saved");
+      }else{
+        alert(res.message)
+      }
+    });
+  }
+
+  openModal(data:site){
+    
+    this.currentSiteId = data.siteId;
+    this.initializeForm();
+    this.getProperties();
+    if(this.modal){
+      this.modal.nativeElement.style.display='block'
+    }
+  }
+  closeModal(){
+    if(this.modal){
+      this.modal.nativeElement.style.display='none'
+    }
+  }
+
+  getProperties(){
+    this.mService.GetAllPropertyMaster().subscribe((res:IAPIResponseModel)=>{
+      this.propertyList = res.data.filter((m:any)=>m.siteId == this.currentSiteId)
+    })
+  }
+
 
 }

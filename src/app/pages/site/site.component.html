@@ -1,5 +1,104 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4">Property Management</h2>
+    
+
+  <!-- Modal -->
+<div id="myModal" class="modal  modal-lg" role="dialog" #propertyModal>
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          
+            <h2 class="text-center mb-4">Property Details Management</h2>
+          
+        </div>
+        <div class="modal-body">  <div class="container">
+            
+            <div class="row ">
+            <!-- Add/Edit Form -->
+            <div class="card">
+              <div class="card-header">
+                <h5>Create/Update Property Details</h5>
+              </div>
+              <div class="card-body">
+                <form [formGroup]="propertyForm">
+                  <div class="row mb-2">
+                 
+                    <div class="col-md-6">
+                      <label for="propertyNo" class="form-label">Property Number</label>
+                      <input type="number" class="form-control" id="propertyNo" placeholder="Enter Property Number" formControlName="propertyNo">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="facing" class="form-label">Facing</label>
+                        <input type="text" class="form-control" id="facing" placeholder="Enter Facing (e.g., North, East)" formControlName="facing">
+                      </div>
+                  </div>
+        
+                  <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label for="totalArea" class="form-label">Total Area</label>
+                        <input type="text" class="form-control" id="totalArea" placeholder="Enter Total Area (e.g., 1500 sqft)" formControlName="totalArea">
+                      </div>
+                    <div class="col-md-6">
+                      <label for="rate" class="form-label">Rate</label>
+                      <input type="number" class="form-control" id="rate" placeholder="Enter Rate (e.g., 5000 per sqft)" formControlName="rate">
+                    </div>
+                  </div>
+                  <div class="text-end">
+                  <button type="submit" class="btn btn-primary" (click)="onSave()">Save</button>
+                </div>
+                </form>
+              </div>
+            </div>
+        
+            <!-- Property Details List Table -->
+            <div class="card">
+              <div class="card-header">
+                <h5>Properties List</h5>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Property Number</th>
+                      <th scope="col">Facing</th>
+                      <th scope="col">Total Area</th>
+                      <th scope="col">Rate</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Sample Property -->
+                     @for (item of propertyList; track $index) {
+                    <tr>
+                     
+                      <td>{{item.propertyNo}}</td>
+                      <td>{{item.facing}}</td>
+                      <td>{{item.totalArea}}</td>
+                      <td>{{item.rate}}</td>
+                     
+                      <td>
+                        <button class="btn btn-warning btn-sm">Edit</button>
+                        <button class="btn btn-danger btn-sm mx-1">Delete</button>
+                      </td>
+                    </tr>
+                }
+                    <!-- More properties can go here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
 
     @if(isFormView()){
 
@@ -145,9 +244,9 @@
                         <th scope="col">Location</th>
                         <th scope="col">City</th>
                         <th scope="col">State</th>
-                        <th scope="col">Pincode</th>
+                      
                         <th scope="col">Total Properties</th>
-                        <th scope="col">Created Date</th>
+                       
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -167,12 +266,13 @@
                         <td>{{item.location}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.state}}</td>
-                        <td>{{item.pincode}}</td>
+                        
                         <td>{{item.totalProperties}}</td>
-                        <td>{{item.createdDate}}</td>
+                      
                         <td>
-                            <button class="btn btn-warning btn-sm" (click)="onEdit(item)">Edit</button>
-                            <button class="btn btn-danger btn-sm" (click)="onDelete(item)">Delete</button>
+                            <button class="btn btn-warning btn-sm mx-1" (click)="onEdit(item)">Edit</button>
+                            <button class="btn btn-success btn-sm mx-1" (click)="openModal(item)">Properties</button>
+                            <button class="btn btn-danger btn-sm mx-1" (click)="onDelete(item)">Delete</button>
                         </td>
                     </tr>
                     <!-- More properties can go here -->
@@ -183,4 +283,9 @@
     </div>
 
     }
+
+
+
+
+
 </div>

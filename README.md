@@ -9,6 +9,7 @@ All Advanced concepts are also used.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
 
 Table Toogle option, Edit, Delete, form New and Edit Toogle option there, From validation, Rative and templatae driven, Enviorment, signal, Asyncronise pipe, side nav bar
+modal help of @ViewChild
 
 ## Development server
 

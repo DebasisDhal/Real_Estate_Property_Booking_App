@@ -9,6 +9,16 @@ export interface IAPIResponseModel{
     data:any
 }
 
+export interface IProperty {
+    propertyId: number
+    propertyNo: number
+    facing: string
+    totalArea: string
+    rate: number
+    siteId: number
+  }
+  
+
 export class site{
         siteId:          number;
         siteTitle:       string;
